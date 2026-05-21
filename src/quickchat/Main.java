@@ -3,31 +3,63 @@ package quickchat;
 import java.util.Scanner;
 
 public class Main {
+
     public static void main(String[] args) {
-        Scanner console = new Scanner(System.in);
+        Scanner input = new Scanner(System.in);
         
+        // ==========================================
+        // PART 1: ACCOUNT REGISTRATION
+        // ==========================================
         System.out.println("--- WELCOME TO THE SYSTEM ---");
-        System.out.print("Enter user name: ");
-        String user = console.nextLine();
-        System.out.print("Enter password: ");
-        String pass = console.nextLine();
+        System.out.println("Please register your account below:\n");
         
-        // This is your exact login verification logic from Part 1!
-        if (user.equals("jade_1") && pass.equals("Rainbow-1")) {
-            System.out.println("Welcome Jade Glory, it is great to see you again");
+        System.out.print("Enter username: ");
+        String registeredUser = input.nextLine();
+        System.out.println("Username successfully captured.");
+        
+        System.out.print("Enter password: ");
+        String registeredPass = input.nextLine();
+        System.out.println("Password successfully captured.");
+        
+        System.out.print("Enter South African cell phone number: ");
+        String registeredCell = input.nextLine();
+        System.out.println("Cell phone number successfully added.");
+        
+        // ==========================================
+        // PART 1 & 2: LOGIN AUTHENTICATION
+        // ==========================================
+        System.out.println("\n---------------------------------");
+        System.out.println("--- LOGIN TO YOUR ACCOUNT ---");
+        System.out.println("---------------------------------");
+        
+        System.out.print("Enter user name: ");
+        String loginUser = input.nextLine();
+        
+        System.out.print("Enter password: ");
+        String loginPass = input.nextLine();
+        
+        // Verifies the user inputs match the registered credentials
+        if (loginUser.equals(registeredUser) && loginPass.equals(registeredPass)) {
+            System.out.println("\nWelcome " + loginUser + ", it is great to see you");
+            System.out.println("Login Successful");
             
-            // Login successful! Now we seamlessly jump straight into your Part 2 QuickChat Menu
-            runQuickChatSystem(console);
-            
+            // Unlocks Part 2 features
+            runQuickChatSystem(input);
         } else {
-            System.out.println("Username or password incorrect, please try again");
+            System.out.println("\nUsername or password incorrect, please try again.");
+            System.out.println("Login Failed");
         }
+        
+        input.close();
     }
 
-    // Moving your Part 2 QuickChat logic down here keeps the code super organized and clean
+    // ==========================================
+    // PART 2: QUICKCHAT SYSTEM MENU
+    // ==========================================
     public static void runQuickChatSystem(Scanner input) {
         MessageManager manager = new MessageManager();
-        System.out.println("\nWelcome to QuickChat.");
+        
+        System.out.println("\nWelcome to QuickChat");
         
         while (true) {
             System.out.println("\nMenu:\n1) Send Messages\n2) Show recently sent messages\n3) Quit");
@@ -41,11 +73,13 @@ public class Main {
             } else if (choice == 2) {
                 System.out.println("Coming Soon.");
             } else if (choice == 1) {
-                System.out.print("Enter batch size: ");
+                System.out.print("How many messages would you like to send? ");
                 int batchSize = input.nextInt();
                 input.nextLine();
                 
                 for (int i = 0; i < batchSize; i++) {
+                    System.out.println("\n--- Sending Message " + (i + 1) + " of " + batchSize + " ---");
+                    
                     System.out.print("Enter phone number: ");
                     String cell = input.nextLine();
                     System.out.print("Enter message text: ");
@@ -67,5 +101,5 @@ public class Main {
                 System.out.println(manager.printMessages());
             }
         }
-    }
+    } 
 }
