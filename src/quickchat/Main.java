@@ -7,11 +7,11 @@ public class Main {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         
-        // ==========================================
-        // PART 1: ACCOUNT REGISTRATION
-        // ==========================================
-        System.out.println("--- WELCOME TO THE SYSTEM ---");
-        System.out.println("Please register your account below:\n");
+        // ===================================================
+        // STEP 1 & 2: ACCOUNT REGISTRATION (PART 1 ALIGNED)
+        // ===================================================
+        System.out.println("--- QUICKCHAT POE ACCOUNT SYSTEM ---");
+        System.out.println("Please register your account credentials:\n");
         
         System.out.print("Enter username: ");
         String registeredUser = input.nextLine();
@@ -21,85 +21,104 @@ public class Main {
         String registeredPass = input.nextLine();
         System.out.println("Password successfully captured.");
         
-        System.out.print("Enter South African cell phone number: ");
+        System.out.print("Enter South African phone number: ");
         String registeredCell = input.nextLine();
         System.out.println("Cell phone number successfully added.");
         
-        // ==========================================
-        // PART 1 & 2: LOGIN AUTHENTICATION
-        // ==========================================
+        // ===================================================
+        // STEP 3: LOGIN AUTHENTICATION ROUTINE
+        // ===================================================
         System.out.println("\n---------------------------------");
-        System.out.println("--- LOGIN TO YOUR ACCOUNT ---");
+        System.out.println("--- LOGIN SECURE ENTRY PORTAL ---");
         System.out.println("---------------------------------");
         
-        System.out.print("Enter user name: ");
+        System.out.print("Enter username to log in: ");
         String loginUser = input.nextLine();
-        
-        System.out.print("Enter password: ");
+        System.out.print("Enter password to log in: ");
         String loginPass = input.nextLine();
         
-        // Verifies the user inputs match the registered credentials
         if (loginUser.equals(registeredUser) && loginPass.equals(registeredPass)) {
-            System.out.println("\nWelcome " + loginUser + ", it is great to see you");
+            System.out.println("\nWelcome back " + loginUser + ", it is great to see you.");
             System.out.println("Login Successful");
             
-            // Unlocks Part 2 features
-            runQuickChatSystem(input);
+            // Seamlessly transfer into the message handling engine
+            runQuickChatApplicationLoop(input);
         } else {
-            System.out.println("\nUsername or password incorrect, please try again.");
-            System.out.println("Login Failed");
+            System.out.println("\nUsername or password incorrect. Login Failed.");
         }
         
         input.close();
     }
 
-    // ==========================================
-    // PART 2: QUICKCHAT SYSTEM MENU
-    // ==========================================
-    public static void runQuickChatSystem(Scanner input) {
+    // ===================================================
+    // STEP 4, 5 & 6: CORE BATCH RUNNER & SUMMARY REVIEWS
+    // ===================================================
+    public static void runQuickChatApplicationLoop(Scanner input) {
         MessageManager manager = new MessageManager();
-        
-        System.out.println("\nWelcome to QuickChat");
+        System.out.println("\n=================================");
+        System.out.println("Welcome to the QuickChat System");
+        System.out.println("=================================");
         
         while (true) {
-            System.out.println("\nMenu:\n1) Send Messages\n2) Show recently sent messages\n3) Quit");
-            System.out.print("Choose an option: ");
-            int choice = input.nextInt();
-            input.nextLine(); 
+            System.out.println("\nMain Operations Menu:");
+            System.out.println("1) Send Batch Messages");
+            System.out.println("2) Show Recently Sent Messages (Report Summary)");
+            System.out.println("3) Search Session Message history by ID");
+            System.out.println("4) Exit Program");
+            System.out.print("Select choice number: ");
             
-            if (choice == 3) {
-                System.out.println("Total messages sent: " + manager.returnTotalMessages());
+            int choice = input.nextInt();
+            input.nextLine(); // CRITICAL FIX: Clears scanner buffer so subsequent loops do not crash
+            
+            if (choice == 4) {
+                System.out.println("\nTotal session messages archived: " + manager.returnTotalMessages());
+                System.out.println("Exiting application suite. Goodbye!");
                 break;
-            } else if (choice == 2) {
-                System.out.println("Coming Soon.");
-            } else if (choice == 1) {
-                System.out.print("How many messages would you like to send? ");
+            } 
+            else if (choice == 3) {
+                // STEP 6: ARRAY SEARCH COMPONENT
+                System.out.print("\nEnter custom message tracking ID to search: ");
+                String searchId = input.nextLine();
+                System.out.println(manager.searchMessageById(searchId));
+            } 
+            else if (choice == 2) {
+                // STEP 5: FINAL SYSTEM POE REPORT SUMMARY 
+                System.out.println(manager.printMessages());
+            } 
+            else if (choice == 1) {
+                System.out.print("\nHow many distinct messages do you want to create in this batch? ");
                 int batchSize = input.nextInt();
-                input.nextLine();
+                input.nextLine(); // Clear scanner buffer again
                 
                 for (int i = 0; i < batchSize; i++) {
-                    System.out.println("\n--- Sending Message " + (i + 1) + " of " + batchSize + " ---");
+                    System.out.println("\n--- Writing Entry " + (i + 1) + " of " + batchSize + " ---");
                     
-                    System.out.print("Enter phone number: ");
+                    System.out.print("Enter recipient phone number: ");
                     String cell = input.nextLine();
-                    System.out.print("Enter message text: ");
+                    
+                    System.out.print("Enter textual message content: ");
                     String text = input.nextLine();
                     
-                    String mockId = "92837461" + i;
-                    Message msg = new Message(mockId, cell, text, i);
+                    System.out.print("Assign a unique Custom Tracking ID (e.g. MSG_01): ");
+                    String customId = input.nextLine();
                     
-                    System.out.println(msg.validateMessageLength());
-                    System.out.println("Structure: " + msg.checkRecipientCell());
+                    // Bundle variables into our Object context
+                    Message msg = new Message(customId, cell, text, i);
                     
-                    System.out.println("\nAction Menu:\n1) Send\n2) Disregard\n3) Store");
-                    System.out.print("Choose action: ");
-                    int action = input.nextInt();
-                    input.nextLine();
+                    // Display system structural logic status rules
+                    System.out.println("Length check status: " + msg.validateMessageLength());
+                    System.out.println("Phone metadata classification: " + msg.checkRecipientCell());
                     
-                    System.out.println(manager.SentMessage(msg, action));
+                    // Action Routing Execution Menu
+                    System.out.println("Action Router options:\n1) Mark as Sent\n2) Mark as Disregarded\n3) Mark as Stored");
+                    System.out.print("Select action code: ");
+                    int actionCode = input.nextInt();
+                    input.nextLine(); // Clear scanner buffer
+                    
+                    // Log to the storage array list instantly
+                    System.out.println(manager.SentMessage(msg, actionCode));
                 }
-                System.out.println(manager.printMessages());
             }
         }
-    } 
+    }
 }
